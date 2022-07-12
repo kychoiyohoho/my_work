@@ -1,6 +1,6 @@
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
@@ -44,10 +44,19 @@ const Player = () => {
     useEffect(() => {
         getPlayerInfo();
     }, []);
-
+    const nextId = useRef(0);
+   
+    
     // 불러온 데이터를 initialState 에 넣어서 관리하다
     const getPlayerInfo = async () => {
-        const playerData = await axios.get('https://nba-players.herokuapp.com/players-stats');
+      
+       
+
+        const playerDataRow = await axios.get('https://nba-players.herokuapp.com/players-stats');
+       
+        //데이터가 key 가 없어서 복제하고 다시 덮어씌었다
+      const playerData ={...playerDataRow,  data:playerDataRow.data.map(({...item})=>({...item, key: nextId.current +=1}))}
+  
 
         dispatch(callInitialData({ ...playerData }));
 

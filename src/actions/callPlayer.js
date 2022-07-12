@@ -9,8 +9,9 @@ export const actionTypes = {
 //dispatch 첫번째 인자값 type: 필수, 두번째 인자값 옵션, 온다면 데이터를 날리다
 export function callInitialData(props){
     return dispatch =>{
-        const playerData =props.data
-      console.log("playerData",playerData);
+        const playerData =props.data;
+       
+    
         return dispatch({type:actionTypes.CALL_PLAYERS, playerData});
     };
 }
